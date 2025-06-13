@@ -1,0 +1,48 @@
+
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: t13s-server-ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx" 
+    cert-manager.io/cluster-issuer: "letsencrypt-prod" 
+spec:
+  tls:
+  - hosts:
+    - api5.my-points.ru
+    - web5.my-points.ru
+    - insights5.my-points.ru
+    secretName: serverpod-tls-t13s
+  rules:
+  - host: "api5.my-points.ru"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: t13s-server-service
+            port:
+              name: api
+  - host: "web5.my-points.ru"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: t13s-server-service
+            port:
+              name: web
+  - host: "insights5.my-points.ru"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: t13s-server-service
+            port:
+              name: insights
+    

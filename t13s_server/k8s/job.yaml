@@ -1,0 +1,38 @@
+
+
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: serverpod-migration-job-t13s
+spec:
+  template:
+    spec:
+      imagePullSecrets:
+      - name: timeweb-registry-secret
+      containers:
+      - name: migrator-t13s
+        image: ...registry.twcstorage.ru/t13s-server:latest
+        command: ["/usr/local/bin/server", "--apply-migrations", "--mode", "production", "--role", "maintenance"]
+
+        envFrom:
+        - configMapRef:
+            name: serverpod-config-t13s
+        env:
+        - name: SERVERPOD_DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: serverpod-secrets-t13s
+              key: database-password
+        - name: SERVERPOD_REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: serverpod-secrets-t13s
+              key: redis-password
+        - name: SERVERPOD_SERVICE_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: serverpod-secrets-t13s
+              key: service-secret
+      restartPolicy: Never
+  backoffLimit: 2
+    

@@ -8,19 +8,19 @@ server:
   https_port: "443:443"
   domain: "my-points.ru"
   subdomain:
-    api: "api"
-    web: "web"
-    insights: "insights"
+    api: "api5"
+    web: "web5"
+    insights: "insights5"
   email: "frolprank@gmail.com"
   
 database:
-  host: "192.168.0.4"
+  host: "192.168.0.6"
   port: "5432"
   name: "t13s_db"
   user: "t13s_user"  
   
 reddis:
-  host: "192.168.0.5"
+  host: "192.168.0.7"
   port: "6379"
   user: "default"
   
