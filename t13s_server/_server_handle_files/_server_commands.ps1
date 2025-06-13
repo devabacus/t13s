@@ -80,3 +80,5 @@ kubectl delete deployment t13s-server-deployment
 kubectl rollout restart deployment t13s-server-deployment
 
 
+
+
